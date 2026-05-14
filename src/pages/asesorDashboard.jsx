@@ -7,13 +7,15 @@ import {
     RiMoneyDollarCircleLine,
 } from "@remixicon/react";
 
-export default function AsesorDashboard() {
+export default function AsesorDashboard({ handlePage, page }) {
     return (
         <section className="w-screen h-screen bg-white flex">
-            <Navbar />
+            <Navbar handlePage={handlePage} page={page} />
 
-            <div className="w-[80vw] h-full flex flex-col">
-                <Header />
+            <div className="w-[85vw] h-full flex flex-col">
+                <Header>
+                    <p className="text-[#0DA071] font-semibold">Dashboard</p>
+                </Header>
 
                 <div className="flex flex-row w-full h-auto">
                     <div className="w-full h-fit grid grid-cols-2 gap-5 p-5">
@@ -23,12 +25,12 @@ export default function AsesorDashboard() {
                         <CardDatos title="Clientes" icon={<RiMoneyDollarCircleLine size={20} color="#0DA071" />} amount="100" description="Activos" />
                     </div>
 
-                    <div className="w-full h-auto flex justify-evenly px-5 py-5 gap-5 bg-gray-100/30">
+                    <div className="w-full h-auto flex justify-center items-center px-5 py-5 gap-5">
                         <CellPieExample />
                     </div>
                 </div>
 
-                <div>
+                <div className="w-full h-auto py-5 px-16">
                     <CardActividad />
                 </div>
             </div>

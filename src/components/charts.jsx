@@ -86,7 +86,7 @@ const colors = [
 
 export function CellPieExample() {
     return (
-        <div className="w-full h-[350px]">
+        <div className="w-auto h-auto">
             <PieChart width={500} height={300}>
                 <Pie
                     data={dataPie}

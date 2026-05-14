@@ -1,15 +1,11 @@
 
-export default function Header() {
+export default function Header({ children }) {
     return (
-        <header className="w-[80vw] h-20 py-4 flex justify-between items-center px-10">
+        <header className="w-[85vw] h-20 py-4 flex justify-between items-center px-10">
 
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-sm text-gray-500">
-                <span>Dashboard</span>
-                {/* <span>/</span>
-                <span className="text-[#0DA071] font-semibold">
-                    Simulación
-                </span> */}
+                {children}
             </div>
 
             {/* Perfil de usuario */}
