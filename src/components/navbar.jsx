@@ -8,7 +8,7 @@ import {
 
 export default function Navbar({ handlePage, page }) {
     return (
-        <nav className="w-[15vw] h-screen bg-[#EDFCF5] py-10">
+        <nav className="fixed inset-y-0 left-0 w-64 bg-[#EDFCF5] py-10 overflow-y-auto z-10">
             <div className="navbar flex flex-col h-full">
                 <div className="logo">
                     <h1 className="text-2xl font-extrabold font-sans mb-14 flex justify-center text-[#0DA071]">Credito Puente</h1>
@@ -24,7 +24,7 @@ export default function Navbar({ handlePage, page }) {
                         <li className={`w-2/3 h-12 mb-4 rounded-2xl flex justify-start items-center ${page === 'clientes' ? 'bg-[#0DA071]' : ''}`}>
                             <a href="#" onClick={() => handlePage('clientes')} className={`text-base font-semibold px-6 py-2 flex justify-start items-center gap-4 ${page === 'clientes' ? 'text-white' : 'text-gray-500'}`}><RiUserLine size={20} /> Clientes</a>
                         </li>
-                        <li className={`w-2/3 h-12 mb-4 rounded-2xl flex justify-start items-center ${page === 'inversionistas' ? 'bg-[#0DA071]' : ''}`}>
+                        <li className={`w-2/3 h-12 mb-4 rounded-2xl flex justify-start items-center ${page === 'inversionistas' ? 'bg-[#0DA071] w-[70%]' : ''}`}>
                             <a href="#" onClick={() => handlePage('inversionistas')} className={`text-base font-semibold px-6 py-2 flex justify-start items-center gap-4 ${page === 'inversionistas' ? 'text-white' : 'text-gray-500'}`}><RiGroup3Line size={20} /> Inversionistas</a>
                         </li>
                     </ul>

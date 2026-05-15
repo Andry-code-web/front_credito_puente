@@ -28,6 +28,14 @@ export default function CardResultados() {
                     <p className="text-sm font-semibold text-gray-400">11,000.00 S/</p>
                 </div>
             </div>
+            <div className="w-full flex justify-end">
+                <button
+                    type="submit"
+                    className="w-1/2 mt-16 bg-[#0DA071] hover:bg-[#0b8f65] text-white text-sm font-semibold px-8 py-2.5 rounded-xl transition-colors duration-200"
+                >
+                    Generar PDF
+                </button>
+            </div>
         </div>
     )
 }

@@ -12,7 +12,7 @@ export default function AsesorDashboard({ handlePage, page }) {
         <section className="w-screen h-screen bg-white flex">
             <Navbar handlePage={handlePage} page={page} />
 
-            <div className="w-[85vw] h-full flex flex-col">
+            <div className="flex-1 ml-64 min-w-0 h-full flex flex-col overflow-y-auto">
                 <Header>
                     <p className="text-[#0DA071] font-semibold">Dashboard</p>
                 </Header>
@@ -30,7 +30,7 @@ export default function AsesorDashboard({ handlePage, page }) {
                     </div>
                 </div>
 
-                <div className="w-full h-auto py-5 px-16">
+                <div className="w-full h-auto px-16">
                     <CardActividad />
                 </div>
             </div>
