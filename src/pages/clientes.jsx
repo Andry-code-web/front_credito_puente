@@ -14,23 +14,25 @@ import {
 } from "../services/clientesService";
 
 // ─── Configuración de columnas y campos ────────────────────────────────────────
-const COLUMNS = ["#", "Nombres", "DNI", "Celular", "Correo", "Dirección"];
-const FIELDS  = ["id", "nombre", "dni", "celular", "correo", "direccion"];
+const COLUMNS = ["#", "Nombres", "DNI", "Celular", "Correo", "Dirección", "Ocupación", "Ingresos"];
+const FIELDS = ["id", "nombre", "dni", "celular", "correo", "direccion", "ocupacion", "ingresos"];
 
 const FORM_FIELDS = [
-    { id: "nombre",   label: "Nombre",   type: "text"  },
-    { id: "dni",      label: "DNI",      type: "text"  },
-    { id: "celular",  label: "Celular",  type: "text"  },
-    { id: "correo",   label: "Correo",   type: "email" },
-    { id: "direccion",label: "Dirección",type: "text"  },
+    { id: "nombre", label: "Nombre", type: "text" },
+    { id: "dni", label: "DNI", type: "text" },
+    { id: "celular", label: "Celular", type: "text" },
+    { id: "correo", label: "Correo", type: "email" },
+    { id: "direccion", label: "Dirección", type: "text" },
+    { id: "ocupacion", label: "Ocupación", type: "text" },
+    { id: "ingresos", label: "Ingresos", type: "number" },
 ];
 
 // ─── Página Clientes ────────────────────────────────────────────────────────────
 export default function Clientes({ handlePage, page }) {
-    const [clientes,    setClientes]    = useState([]);
-    const [loading,     setLoading]     = useState(false);
-    const [saving,      setSaving]      = useState(false);
-    const [openModal,   setOpenModal]   = useState(false);
+    const [clientes, setClientes] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
 
     // ── Carga inicial ──────────────────────────────────────────────────────────
     const fetchClientes = useCallback(async () => {
