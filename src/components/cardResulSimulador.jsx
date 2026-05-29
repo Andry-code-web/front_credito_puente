@@ -1,3 +1,5 @@
+import { generarPdfSolicitudPrestamo } from "../services/simulacionService";
+
 export default function CardResultados({ simulationResult = null, clienteName = "—", moneda = "pen" }) {
     const formatCurrency = (amount) => {
         if (amount === undefined || amount === null) return "—";
@@ -17,7 +19,33 @@ export default function CardResultados({ simulationResult = null, clienteName = 
             alert("No hay simulación para imprimir.");
             return;
         }
-        window.print();
+
+        const data = {
+            monto: simulationResult.formData?.monto_prestamo || simulationResult.resumen?.monto_prestamo,
+            moneda: moneda,
+            interes: simulationResult.formData?.tasa_interes || parseFloat(simulationResult.resumen?.tasa_interes),
+            meses: simulationResult.formData?.meses || simulationResult.resumen?.meses,
+            tipo_pago: simulationResult.formData?.tipo_pago || 'mensual',
+            fecha_inicio: simulationResult.formData?.created_at || new Date().toISOString().split('T')[0],
+            id_cliente: simulationResult.formData?.cliente_id,
+            id_inversor: simulationResult.formData?.inversionista_id,
+            cuotas: cuotas
+        };
+
+        generarPdfSolicitudPrestamo(data).then((blob) => {
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            const formattedName = clienteName.replace(/\s+/g, '_');
+            link.download = `Propuesta_Prestamo_${formattedName}.pdf`;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        }).catch((error) => {
+            console.error("Error al generar el PDF:", error);
+            alert("Error al generar el PDF.");
+        });
     };
 
     return (

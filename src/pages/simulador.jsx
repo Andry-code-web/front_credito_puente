@@ -8,7 +8,7 @@ import { getClientes } from "../services/clientesService";
 import { getInversores } from "../services/inversoresService";
 import { simularCredito, crearPrestamo } from "../services/simulacionService";
 
-export default function Simulador({ handlePage, page }) {
+export default function Simulador({ handlePage, page, onLogout }) {
     const [clientes, setClientes] = useState([]);
     const [inversores, setInversores] = useState([]);
     const [simulationResult, setSimulationResult] = useState(null);
@@ -48,13 +48,16 @@ export default function Simulador({ handlePage, page }) {
             setSelectedClienteName(cli ? cli.nombre : "Cliente no seleccionado");
             setMoneda(formData.moneda || "pen");
 
-            const result = await simularCredito({
+                       const result = await simularCredito({
                 monto: formData.monto_prestamo,
                 interes: formData.tasa_interes,
                 meses: formData.meses,
                 fecha_inicio: formData.created_at
             });
-            setSimulationResult(result);
+            setSimulationResult({
+                ...result,
+                formData: formData
+            });
         } catch (err) {
             setError(err.message || "Error al realizar la simulación");
         } finally {
@@ -104,7 +107,7 @@ export default function Simulador({ handlePage, page }) {
 
     return (
         <section className="w-screen h-screen flex">
-            <Navbar handlePage={handlePage} page={page} />
+            <Navbar handlePage={handlePage} page={page} onLogout={onLogout} />
 
             <div className="flex-1 ml-64 min-w-0 h-full flex flex-col overflow-y-auto">
                 <Header>

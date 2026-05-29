@@ -28,7 +28,7 @@ const FORM_FIELDS = [
 ];
 
 // ─── Página Inversores ──────────────────────────────────────────────────────────
-export default function Inversionistas({ handlePage, page }) {
+export default function Inversionistas({ handlePage, page, onLogout }) {
     const [inversores, setInversores] = useState([]);
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
@@ -87,7 +87,7 @@ export default function Inversionistas({ handlePage, page }) {
     // ── Render ─────────────────────────────────────────────────────────────────
     return (
         <div className="w-screen h-screen flex">
-            <Navbar handlePage={handlePage} page={page} />
+            <Navbar handlePage={handlePage} page={page} onLogout={onLogout} />
 
             <div className="flex-1 ml-64 min-w-0 h-full flex flex-col overflow-y-auto">
 

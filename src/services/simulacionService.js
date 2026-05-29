@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://back-credito-puente-131dfbfcf40e.herokuapp.com/';
 
 /**
  * Realiza la simulación de un crédito puente
@@ -35,3 +35,20 @@ export async function crearPrestamo(data) {
     }
     return res.json();
 }
+
+
+/* 
+* Generar pdf de solicitud de prestamo (simulacion)
+* POST /prestamos/pdf-simulacion
+*
+*/
+export async function generarPdfSolicitudPrestamo(data) {
+    const res = await fetch(`${BASE_URL}/prestamos/pdf-simulacion`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Error al generar el pdf de la solicitud de prestamo');
+    return res.blob();
+}
+

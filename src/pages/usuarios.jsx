@@ -7,39 +7,57 @@ import FormAgregar from "../components/forms/formAgregar";
 import TablaMostrarInfo from "../components/tables/tablaMostrarInfo";
 
 import {
-    getClientes,
-    createCliente,
-    updateCliente,
-    deleteCliente,
-} from "../services/clientesService";
+    getUsuarios,
+    createUsuario,
+    deleteUsuario,
+} from "../services/usuariosservice";
 
 // ─── Configuración de columnas y campos ────────────────────────────────────────
-const COLUMNS = ["#", "Nombres", "DNI", "Celular", "Correo", "Dirección", "Ocupación", "Ingresos"];
-const FIELDS = ["id", "nombre", "dni", "celular", "correo", "direccion", "ocupacion", "ingresos"];
+const COLUMNS = ["#", "Usuario", "Nombres", "Correo", "Rol", "Agencia", "Activo"];
+const FIELDS = ["id", "usuario", "nombre", "correo", "rol", "agencia", "is_active"];
 
 const FORM_FIELDS = [
     { id: "nombre", label: "Nombre", type: "text" },
-    { id: "dni", label: "DNI", type: "text" },
-    { id: "celular", label: "Celular", type: "text" },
+    { id: "usuario", label: "Usuario", type: "text" },
     { id: "correo", label: "Correo", type: "email" },
-    { id: "direccion", label: "Dirección", type: "text" },
-    { id: "ocupacion", label: "Ocupación", type: "text" },
-    { id: "ingresos", label: "Ingresos", type: "number" },
+    { id: "celular", label: "Celular", type: "text" },
+    { id: "password", label: "Contraseña", type: "password" },
+
+    {
+        id: "rol",
+        label: "Rol",
+        type: "select",
+        options: [
+            { value: "admin", label: "Administrador" },
+            { value: "asesor", label: "Asesor" },
+        ],
+    },
+
+    {
+        id: "agencia",
+        label: "Agencia",
+        type: "select",
+        options: [
+            { value: "agencia1", label: "Agencia 1" },
+            { value: "agencia2", label: "Agencia 2" },
+            { value: "agencia3", label: "Agencia 3" },
+        ],
+    },
 ];
 
-// ─── Página Clientes ────────────────────────────────────────────────────────────
-export default function Clientes({ handlePage, page, onLogout }) {
-    const [clientes, setClientes] = useState([]);
+// ─── Página Usuarios ────────────────────────────────────────────────────────────
+export default function Usuarios({ handlePage, page, onLogout }) {
+    const [usuarios, setUsuarios] = useState([]);
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [openModal, setOpenModal] = useState(false);
 
     // ── Carga inicial ──────────────────────────────────────────────────────────
-    const fetchClientes = useCallback(async () => {
+    const fetchUsuarios = useCallback(async () => {
         setLoading(true);
         try {
-            const data = await getClientes();
-            setClientes(data);
+            const data = await getUsuarios();
+            setUsuarios(data);
         } catch (err) {
             console.error(err);
         } finally {
@@ -48,15 +66,16 @@ export default function Clientes({ handlePage, page, onLogout }) {
     }, []);
 
     useEffect(() => {
-        fetchClientes();
-    }, [fetchClientes]);
+        fetchUsuarios();
+    }, [fetchUsuarios]);
 
     // ── Crear ──────────────────────────────────────────────────────────────────
     const handleCreate = async (formData) => {
         setSaving(true);
         try {
-            await createCliente(formData);
-            await fetchClientes();          // refresca la tabla
+            // Aseguramos que is_active sea true por defecto
+            await createUsuario({ ...formData, is_active: 1 });
+            await fetchUsuarios();          // refresca la tabla
         } finally {
             setSaving(false);
         }
@@ -64,24 +83,23 @@ export default function Clientes({ handlePage, page, onLogout }) {
 
     // ── Eliminar ───────────────────────────────────────────────────────────────
     const handleDelete = async (row) => {
-        if (!window.confirm(`¿Eliminar a "${row.nombre}"?`)) return;
+        if (!window.confirm(`¿Eliminar al usuario "${row.usuario}"?`)) return;
         try {
-            await deleteCliente(row.id);
-            setClientes(prev => prev.filter(c => c.id !== row.id));
+            await deleteUsuario(row.id);
+            setUsuarios(prev => prev.filter(c => c.id !== row.id));
         } catch (err) {
             alert(err.message);
         }
     };
 
-    // ── Editar (placeholder — puedes ampliar con un modal de edición) ──────────
+    // ── Editar (placeholder) ──────────
     const handleEdit = (row) => {
-        console.log('Editar cliente:', row);
-        // TODO: abrir modal de edición con los datos del cliente
+        console.log('Editar usuario:', row);
+        // TODO: abrir modal de edición
     };
 
     const handleView = (row) => {
-        console.log('Ver cliente:', row);
-        // TODO: abrir panel de detalle
+        console.log('Ver usuario:', row);
     };
 
     // ── Render ─────────────────────────────────────────────────────────────────
@@ -95,7 +113,7 @@ export default function Clientes({ handlePage, page, onLogout }) {
                 <Header>
                     <span>Dashboard</span>
                     <span>/</span>
-                    <span className="text-[#0DA071] font-semibold">Clientes</span>
+                    <span className="text-[#0DA071] font-semibold">Usuarios</span>
                 </Header>
 
                 {/* Toolbar */}
@@ -105,7 +123,7 @@ export default function Clientes({ handlePage, page, onLogout }) {
                             onClick={() => setOpenModal(true)}
                             className="w-auto h-5 px-5 py-5 font-semibold font-sans bg-blue-500 text-white hover:bg-blue-600 cursor-pointer transition-all duration-300 rounded-lg flex justify-center items-center gap-2"
                         >
-                            <RiAddLine /> Agregar Cliente
+                            <RiAddLine /> Agregar Usuario
                         </button>
                     </div>
 
@@ -119,7 +137,7 @@ export default function Clientes({ handlePage, page, onLogout }) {
                     >
                         <div className="w-1/2 h-fit absolute inset-0 m-auto inset-x-0 top-0 bottom-0 z-20">
                             <FormAgregar
-                                titleModal="Cliente"
+                                titleModal="Usuario"
                                 openModal={openModal}
                                 setOpenModal={setOpenModal}
                                 fields={FORM_FIELDS}
@@ -135,9 +153,9 @@ export default function Clientes({ handlePage, page, onLogout }) {
                     <TablaMostrarInfo
                         columns={COLUMNS}
                         fields={FIELDS}
-                        rows={clientes}
+                        rows={usuarios}
                         loading={loading}
-                        emptyText="No hay clientes registrados"
+                        emptyText="No hay usuarios registrados"
                         onView={handleView}
                         onEdit={handleEdit}
                         onDelete={handleDelete}

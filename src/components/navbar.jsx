@@ -3,10 +3,13 @@ import {
     RiMoneyDollarCircleLine,
     RiUserLine,
     RiGroup3Line,
-    RiLogoutBoxRLine
+    RiLogoutBoxRLine,
+    RiShieldUserLine
 } from "@remixicon/react";
+import { getAuthUser } from "../services/authService";
 
-export default function Navbar({ handlePage, page }) {
+export default function Navbar({ handlePage, page, onLogout }) {
+    const user = getAuthUser();
     return (
         <nav className="fixed inset-y-0 left-0 w-64 bg-[#EDFCF5] py-10 overflow-y-auto z-10">
             <div className="navbar flex flex-col h-full">
@@ -27,10 +30,21 @@ export default function Navbar({ handlePage, page }) {
                         <li className={`w-2/3 h-12 mb-4 rounded-2xl flex justify-start items-center ${page === 'inversionistas' ? 'bg-[#0DA071] w-[70%]' : ''}`}>
                             <a href="#" onClick={() => handlePage('inversionistas')} className={`text-base font-semibold px-6 py-2 flex justify-start items-center gap-4 ${page === 'inversionistas' ? 'text-white' : 'text-gray-500'}`}><RiGroup3Line size={20} /> Inversionistas</a>
                         </li>
+                        {user?.rol === 'admin' && (
+                            <li className={`w-2/3 h-12 mb-4 rounded-2xl flex justify-start items-center ${page === 'usuarios' ? 'bg-[#0DA071]' : ''}`}>
+                                <a href="#" onClick={() => handlePage('usuarios')} className={`text-base font-semibold px-6 py-2 flex justify-start items-center gap-4 ${page === 'usuarios' ? 'text-white' : 'text-gray-500'}`}><RiShieldUserLine size={20} /> Usuarios</a>
+                            </li>
+                        )}
                     </ul>
 
                     <div className="user-info flex justify-center items-center ">
-                        <a href="#" className="text-base font-semibold px-6 py-2 flex justify-start items-center gap-4 text-gray-500 hover:text-[#0DA071] hover:rounded-2xl"><RiLogoutBoxRLine /> Logout</a>
+                        <a
+                            href="#"
+                            onClick={(e) => { e.preventDefault(); onLogout?.(); }}
+                            className="text-base font-semibold px-6 py-2 flex justify-start items-center gap-4 text-gray-500 hover:text-[#0DA071] hover:rounded-2xl"
+                        >
+                            <RiLogoutBoxRLine /> Logout
+                        </a>
                     </div>
                 </div>
 

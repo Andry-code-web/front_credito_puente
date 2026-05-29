@@ -7,10 +7,10 @@ import {
     RiMoneyDollarCircleLine,
 } from "@remixicon/react";
 
-export default function AsesorDashboard({ handlePage, page }) {
+export default function AsesorDashboard({ handlePage, page, onLogout }) {
     return (
         <section className="w-screen h-screen bg-white flex">
-            <Navbar handlePage={handlePage} page={page} />
+            <Navbar handlePage={handlePage} page={page} onLogout={onLogout} />
 
             <div className="flex-1 ml-64 min-w-0 h-full flex flex-col overflow-y-auto">
                 <Header>

@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/clientes';
+const BASE_URL = 'https://back-credito-puente-131dfbfcf40e.herokuapp.com/clientes';
 
 /**
  * Obtiene todos los clientes
