@@ -4,10 +4,11 @@ import Simulador from './pages/simulador.jsx'
 import Clientes from './pages/clientes.jsx'
 import Inversionistas from './pages/inversionistas.jsx'
 import Usuarios from './pages/usuarios.jsx'
+import Prestamos from './pages/prestamos.jsx'
 import Login from './pages/login.jsx'
 import { clearSession, getAuthToken } from './services/authService.js'
 
-const VALID_PAGES = ['login', 'asesor', 'simulador', 'clientes', 'inversionistas', 'usuarios']
+const VALID_PAGES = ['login', 'asesor', 'simulador', 'prestamos', 'clientes', 'inversionistas', 'usuarios']
 
 function getInitialPage() {
   const token = getAuthToken()
@@ -90,6 +91,7 @@ function App() {
     <>
       {page === 'asesor' && <AsesorDashboard handlePage={handlePage} page={page} onLogout={handleLogout} />}
       {page === 'simulador' && <Simulador handlePage={handlePage} page={page} onLogout={handleLogout} />}
+      {page === 'prestamos' && <Prestamos handlePage={handlePage} page={page} onLogout={handleLogout} />}
       {page === 'clientes' && <Clientes handlePage={handlePage} page={page} onLogout={handleLogout} />}
       {page === 'inversionistas' && <Inversionistas handlePage={handlePage} page={page} onLogout={handleLogout} />}
       {page === 'usuarios' && <Usuarios handlePage={handlePage} page={page} onLogout={handleLogout} />}

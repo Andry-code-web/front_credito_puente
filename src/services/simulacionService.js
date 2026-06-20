@@ -1,4 +1,4 @@
-const BASE_URL = 'https://back-credito-puente-131dfbfcf40e.herokuapp.com/';
+const BASE_URL = 'https://back-credito-puente-131dfbfcf40e.herokuapp.com';
 
 /**
  * Realiza la simulación de un crédito puente

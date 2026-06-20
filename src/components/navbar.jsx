@@ -1,6 +1,7 @@
 import {
     RiHomeLine,
     RiMoneyDollarCircleLine,
+    RiBankLine,
     RiUserLine,
     RiGroup3Line,
     RiLogoutBoxRLine,
@@ -23,6 +24,9 @@ export default function Navbar({ handlePage, page, onLogout }) {
                         </li>
                         <li className={`w-2/3 h-12 mb-4 rounded-2xl flex justify-start items-center ${page === 'simulador' ? 'bg-[#0DA071]' : ''}`}>
                             <a href="#" onClick={() => handlePage('simulador')} className={`text-base font-semibold px-6 py-2 flex justify-start items-center gap-4 ${page === 'simulador' ? 'text-white' : 'text-gray-500'}`}><RiMoneyDollarCircleLine size={20} /> Simulacion</a>
+                        </li>
+                        <li className={`w-2/3 h-12 mb-4 rounded-2xl flex justify-start items-center ${page === 'prestamos' ? 'bg-[#0DA071]' : ''}`}>
+                            <a href="#" onClick={() => handlePage('prestamos')} className={`text-base font-semibold px-6 py-2 flex justify-start items-center gap-4 ${page === 'prestamos' ? 'text-white' : 'text-gray-500'}`}><RiBankLine size={20} /> Préstamos</a>
                         </li>
                         <li className={`w-2/3 h-12 mb-4 rounded-2xl flex justify-start items-center ${page === 'clientes' ? 'bg-[#0DA071]' : ''}`}>
                             <a href="#" onClick={() => handlePage('clientes')} className={`text-base font-semibold px-6 py-2 flex justify-start items-center gap-4 ${page === 'clientes' ? 'text-white' : 'text-gray-500'}`}><RiUserLine size={20} /> Clientes</a>
